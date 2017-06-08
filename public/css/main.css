@@ -3022,7 +3022,9 @@ html.boxed #homepage-container {
 #sub_nav {
   background: none;
   border: none;
-  margin-bottom: 0px; }
+  margin-bottom: 0px;
+  position: fixed;
+  left: 1px; }
   #sub_nav .menu-darkgreen45 {
     padding: 0px; }
     #sub_nav .menu-darkgreen45 li a {
@@ -3030,3 +3032,22 @@ html.boxed #homepage-container {
     #sub_nav .menu-darkgreen45 button {
       margin-top: 20px;
       padding: 0px 10px; }
+
+#rubix-nav-header #main-menu {
+  padding: 15px 10px; }
+  #rubix-nav-header #main-menu ul {
+    width: 350px; }
+
+#notification_btn {
+  position: fixed;
+  right: 20px;
+  bottom: 50px; }
+
+#notification_modal {
+  right: 5px;
+  bottom: 60px;
+  left: inherit;
+  top: inherit; }
+  #notification_modal .modal-body {
+    height: 300px;
+    overflow-y: scroll; }

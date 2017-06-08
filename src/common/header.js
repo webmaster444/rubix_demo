@@ -28,7 +28,16 @@ import {
   PanelHeader,
   PanelBody,
   DropdownButton,
-  SidebarNavItem
+  SidebarNavItem,
+  Image,
+  Modal,
+  OverlayTrigger,
+  TimelineView,
+  TimelineItem,
+  TimelineBody,
+  TimelineHeader,
+  TimelineAvatar,
+  TimelineTitle
 } from '@sketchpixy/rubix';
 
 var applications_data = [ 
@@ -40,7 +49,7 @@ var applications_data = [
 ];
 
 @withRouter
-class DropdownsAndDropups extends React.Component {
+class Application_Selector extends React.Component {
   getPath(path) {
     var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
     path = `/${dir}/${path}`;
@@ -67,7 +76,7 @@ class DropdownsAndDropups extends React.Component {
         <div>
         <Navbar fluid bsStyle="inverse" id="sub_nav">
           <Navbar.Header>
-          <DropdownButton bsStyle='darkgreen45' title='Applications' class='apps_dropdown'>
+          <DropdownButton bsStyle='darkgreen45' title={id_str} class='apps_dropdown'>
             <SidebarNavItem name='Application1' href={::this.getPath('application1')} />
             <SidebarNavItem name='Application2' href={::this.getPath('application2')} />
           </DropdownButton>
@@ -80,14 +89,6 @@ class DropdownsAndDropups extends React.Component {
         </Navbar>
         </div>
       </Col>
-    );
-  }
-}
-
-class Application_Selector extends React.Component {
-  render() {
-    return (
-      <DropdownsAndDropups />
     );
   }
 }
@@ -359,62 +360,25 @@ class BodyLayout extends React.Component {
   }
 }
 
-class SettingsMenu extends React.Component {
-  state = {
-    fluidLayout: true
-  };
-
-  handleViewportChange(eventKey) {
-    if (eventKey === 'fluid') {
-      localStorage.setItem('settingsMenu', 'fluid');
-      $('html').removeClass('boxed');
-      this.setState({ fluidLayout: true })
-    } else {
-      localStorage.setItem('settingsMenu', 'boxed');
-      $('html').addClass('boxed');
-      this.setState({ fluidLayout: false })
-    }
-    setTimeout(() => {
-      $(window).trigger('resize');
-    }, 300);
-  }
-
-  componentDidMount() {
-    let item = localStorage.getItem('settingsMenu') || 'fluid';
-    localStorage.setItem('settingsMenu', item);
-
-    this.handleViewportChange(item);
-  }
-
+class MainMenu extends React.Component {
   render() {
     const cogIcon = (
-      <Icon bundle='fontello' glyph='cog-7' style={{position: 'relative', top: 2}} />
+      <Image src={`/imgs/app/main_menu.svg`} width='50' height='40'/>
     );
 
-    let { fluidLayout } = this.state;
-
     return (
-      <NavDropdownHover noCaret eventKey={4} title={cogIcon} id='settings-menu' className='header-menu small-font' onSelect={::this.handleViewportChange}>
-        <MenuItem eventKey='dimension' header>
-          <Entity entity='settingsMenuHeading' defaultValue='dimension' />
+      <NavDropdownHover noCaret eventKey={4} title={cogIcon} id='main-menu' className='header-menu small-font'>
+        <MenuItem eventKey='home' href="#home">
+          <span> Home</span>
         </MenuItem>
-        <MenuItem eventKey='fluid' active={fluidLayout}>
-          <Entity entity='settingsMenuFluid' defaultValue='Fluid' />
+        <MenuItem href="/customers">
+          <span> Customers </span>
         </MenuItem>
-        <MenuItem eventKey='boxed' active={!fluidLayout}>
-          <Entity entity='settingsMenuBoxed' defaultValue='Boxed (990px)' />
+        <MenuItem href="/vehicles">
+          <span> Vehicles </span>
         </MenuItem>
-        <MenuItem eventKey='layout' header>
-          Layout
-        </MenuItem>
-        <MenuItem eventKey='ltrRtlLayout' noHover>
-          <LtrRtlLayout />
-        </MenuItem>
-        <MenuItem eventKey='bodyLayoutHeading' header>
-          Body Layout
-        </MenuItem>
-        <MenuItem eventKey='bodyLayout' noHover>
-          <BodyLayout />
+        <MenuItem href="/contact" >
+          <span> Contact </span>
         </MenuItem>
       </NavDropdownHover>
     );
@@ -432,19 +396,130 @@ class HeaderNavigation extends React.Component {
       <Nav pullRight>
         <Nav className='hidden-xs'>
           <NavItem divider />
-          <SettingsMenu />
-        </Nav>
-        <Nav>
-          <NavItem className='logout' href='#' onClick={::this.handleLogout}>
-            <Icon bundle='fontello' glyph='menu-1' />
-          </NavItem>
+          <MainMenu />
         </Nav>
       </Nav>
     );
   }
 }
 
+class SpecialModal extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { showModal: false };
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+  render() {
+
+    return (
+      <Modal id="notification_modal" show={this.state.showModal} onHide={::this.close}>
+        <Modal.Header closeButton>
+          <Modal.Title>Notifications</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+              <TimelineView className='border-black50 tl-blue'>
+                <TimelineItem>
+                  <TimelineHeader>
+                    <TimelineAvatar src='/imgs/app/avatars/avatar5.png' className='border-blue' />
+                    <TimelineTitle>
+                      Jordyn Ouellet
+                    </TimelineTitle>
+                  </TimelineHeader>
+                  <TimelineBody>
+                    <ul>
+                      <li>
+                        <div>
+                          <div className='fg-lightgray'><small><strong>Aug 10, 2014</strong></small></div>
+                          <div><small>Sent you a friend request!</small></div>
+                        </div>
+                        <br/>
+                        <div className='text-center'>
+                          <Button xs outlined bsStyle='darkgreen45'>
+                            Accept
+                          </Button>{' '}
+                          <Button xs outlined bsStyle='red'>
+                            Reject
+                          </Button>
+                        </div>
+                      </li>
+                    </ul>
+                  </TimelineBody>
+                </TimelineItem>
+              </TimelineView>
+              <TimelineView className='border-black50 tl-green'>
+                <TimelineItem>
+                  <TimelineHeader>
+                    <TimelineAvatar src='/imgs/app/avatars/avatar7.png' className='border-green' />
+                    <TimelineTitle>
+                      Toby King
+                    </TimelineTitle>
+                  </TimelineHeader>
+                  <TimelineBody>
+                    <ul>
+                      <li>
+                        <div className='fg-lightgray'><small><strong>Aug 9, 2014</strong></small></div>
+                        <div>
+                          <small>Visiting <strong className='fg-darkgreen45'>The Museum of Modern Art</strong> at <strong><em>11 W 53rd St, New York, NY 10019</em></strong></small>
+                        </div>
+                        <br/>
+                        <img src='/imgs/app/staticmap.png' alt='Points of Interest in Lower Manhattan' />
+                      </li>
+                      <li>
+                        <div className='fg-lightgray'><small><strong>Aug 8, 2014</strong></small></div>
+                        <div>
+                          <small>Driving through! :)</small>
+                        </div>
+                        <br/>
+                        <img width='155' src='/imgs/app/gallery/tumblr_n7yhe1sTa41st5lhmo1_1280-thumb.jpg' alt='the taxi' />
+                      </li>
+                    </ul>
+                  </TimelineBody>
+                </TimelineItem>
+              </TimelineView>
+              <TimelineView className='border-black50 tl-yellow'>
+                <TimelineItem>
+                  <TimelineHeader>
+                    <TimelineAvatar src='/imgs/app/avatars/avatar10.png' className='border-yellow' />
+                    <TimelineTitle>
+                      Angelina Mills
+                    </TimelineTitle>
+                  </TimelineHeader>
+                  <TimelineBody>
+                    <ul>
+                      <li>
+                        <div className='fg-lightgray'><small><strong>Aug 8, 2014</strong></small></div>
+                        <div>
+                          <small>Hey you free tomorrow? Lets go shopping!</small>
+                        </div>
+                      </li>
+                    </ul>
+                  </TimelineBody>
+                </TimelineItem>
+              </TimelineView>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={::this.close}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+}
+
+
 export default class Header extends React.Component {
+  launchSpecialModal() {
+    this.specialModal.open();
+  }
+
   render() {
     return (
       <Grid id='navbar' {...this.props}>
@@ -452,20 +527,25 @@ export default class Header extends React.Component {
           <Col xs={12}>
             <Navbar fixedTop fluid id='rubix-nav-header'>
               <Row>
-                <Col xs={3} visible='xs'>
-                  <SidebarBtn />
-                </Col>
                 <Col xs={6} sm={8}>
                   <Application_Selector/>
                 </Col>
                 <Col xs={3} sm={4} collapseRight className='text-right'>
                   <HeaderNavigation />
                 </Col>
+
+                <Button id="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal}>
+                  Notifications
+                </Button>
+
+                <SpecialModal ref={(c) => this.specialModal = c} />
+        
               </Row>
             </Navbar>
           </Col>
         </Row>
       </Grid>
+
     );
   }
 }

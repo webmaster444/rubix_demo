@@ -61,7 +61,7 @@ export default class Homepage extends React.Component {
   render() {
     return (
       <div id='homepage-container'>
-        <Button bsStyle='deepred' id='demo-btn' onClick={::this.handleNavigation}>View Demo</Button>
+        <Button bsStyle='deepred' id='demo-btn' onClick={::this.handleNavigation}>Go Dashboard</Button>
         <div>
           <Hero className='text-center hidden-xs' style={{height: 475, backgroundImage: 'url(/imgs/app/homepage/background.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden'}}>
             <img src='/imgs/app/homepage/simplepowerful.png' style={{marginTop: 5}} />
@@ -363,7 +363,7 @@ export default class Homepage extends React.Component {
         <div>
           <Hero className='text-center' style={{height: 215, backgroundImage: 'url(/imgs/app/homepage/background.png)', backgroundRepeat: 'no-repeat', backgroundSize: 'cover', overflow: 'hidden', backgroundPosition: '0% 100%'}}>
             <h1 className='fg-white' style={{marginTop: 0, marginBottom: 25, fontWeight: 100}}>So what are you waiting for?</h1>
-            <Button lg outlined inverse retainBackground bsStyle='red' onClick={::this.handleNavigation}>Click here to View Demo</Button>
+            <Button lg outlined inverse retainBackground bsStyle='red' onClick={::this.handleNavigation}>Click here to Go Dashboard</Button>
           </Hero>
         </div>
       </div>
