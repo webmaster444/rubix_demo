@@ -53,7 +53,8 @@ class Application_Selector extends React.Component {
   constructor(){
     super();
     this.state = {
-      menuitemClicked:false
+      menuitemClicked:false,
+      firstTime:true
     }
   }
 
@@ -72,11 +73,11 @@ class Application_Selector extends React.Component {
   }
 
   handleClick(){
-    this.setState({menuitemClicked:true});
+    this.setState({menuitemClicked:true,firstTime:false});
   }
 
   handleBtnClick(){
-    this.setState({menuitemClicked:false});
+    this.setState({menuitemClicked:false,firstTime:false});
   }
   render() {
     var dir = this.props.location.pathname;
@@ -85,10 +86,14 @@ class Application_Selector extends React.Component {
 
     var links_data = ::this.findElement(applications_data,'id',id_str).links;
 
+    var tmp_className;
+    if(!this.state.firstTime){
+      tmp_className = !this.state.menuitemClicked?'close1':'open1';
+    }
     return (
       <Col xs={12}>
         <div>
-        <Navbar fluid bsStyle="inverse" id="sub_nav" className={(!this.state.menuitemClicked?'close1':'open1')}>
+        <Navbar fluid bsStyle="inverse" id="sub_nav" className={tmp_className}>
           <Navbar.Header>
           <DropdownButton bsStyle='darkgreen45' title={id_str} className='apps_dropdown' onClick={()=>this.handleBtnClick()} key="test" id="sub_nav_btn">
             <SidebarNavItem eventKey="1" name='Application1' onClick={()=>this.handleClick()} href={::this.getPath('application1')} />
