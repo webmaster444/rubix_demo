@@ -3019,17 +3019,32 @@ html.boxed #homepage-container {
   position: relative; }
 
 /* Layout styles */
-#sub_nav {
+#rubix-nav-header #sub_nav {
   background: none;
   border: none;
   margin-bottom: 0px;
   position: fixed;
   left: 1px; }
-  #sub_nav .menu-darkgreen45 {
+  @media (max-width: 992px) {
+    #rubix-nav-header #sub_nav .navbar-header {
+      float: left; } }
+  @media (max-width: 992px) {
+    #rubix-nav-header #sub_nav .navbar-nav {
+      margin-left: 25px; } }
+  @media (max-width: 420px) {
+    #rubix-nav-header #sub_nav .navbar-nav {
+      display: none; } }
+  @media (max-width: 992px) {
+    #rubix-nav-header #sub_nav .navbar-nav li {
+      float: left; } }
+  @media (max-width: 992px) {
+    #rubix-nav-header #sub_nav .navbar-nav li a {
+      padding: 25px 10px; } }
+  #rubix-nav-header #sub_nav .menu-darkgreen45 {
     padding: 0px; }
-    #sub_nav .menu-darkgreen45 li a {
+    #rubix-nav-header #sub_nav .menu-darkgreen45 li a {
       padding: 10px; }
-    #sub_nav .menu-darkgreen45 button {
+    #rubix-nav-header #sub_nav .menu-darkgreen45 button {
       margin-top: 20px;
       padding: 0px 10px; }
 
@@ -3037,15 +3052,22 @@ html.boxed #homepage-container {
   padding: 15px 10px; }
   #rubix-nav-header #main-menu ul {
     width: 350px; }
+  @media (max-width: 992px) {
+    #rubix-nav-header #main-menu {
+      text-align: right; } }
+  @media (max-width: 992px) {
+    #rubix-nav-header #main-menu + .dropdown-menu {
+      background: white;
+      position: relative; } }
 
 #notification_btn {
   position: fixed;
   right: 20px;
-  bottom: 50px; }
+  bottom: 30px; }
 
 #notification_modal {
   right: 5px;
-  bottom: 60px;
+  bottom: 50px;
   left: inherit;
   top: inherit; }
   #notification_modal .modal-body {

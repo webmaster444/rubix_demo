@@ -50,6 +50,13 @@ var applications_data = [
 
 @withRouter
 class Application_Selector extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      menuitemClicked:false
+    }
+  }
+
   getPath(path) {
     var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
     path = `/${dir}/${path}`;
@@ -64,6 +71,13 @@ class Application_Selector extends React.Component {
     return false;
   }
 
+  handleClick(){
+    this.setState({menuitemClicked:true});
+  }
+
+  handleBtnClick(){
+    this.setState({menuitemClicked:false});
+  }
   render() {
     var dir = this.props.location.pathname;
     var index_str = dir.lastIndexOf('/');
@@ -74,11 +88,11 @@ class Application_Selector extends React.Component {
     return (
       <Col xs={12}>
         <div>
-        <Navbar fluid bsStyle="inverse" id="sub_nav">
+        <Navbar fluid bsStyle="inverse" id="sub_nav" className={(!this.state.menuitemClicked?'close1':'open1')}>
           <Navbar.Header>
-          <DropdownButton bsStyle='darkgreen45' title={id_str} class='apps_dropdown'>
-            <SidebarNavItem name='Application1' href={::this.getPath('application1')} />
-            <SidebarNavItem name='Application2' href={::this.getPath('application2')} />
+          <DropdownButton bsStyle='darkgreen45' title={id_str} className='apps_dropdown' onClick={()=>this.handleBtnClick()} key="test" id="sub_nav_btn">
+            <SidebarNavItem eventKey="1" name='Application1' onClick={()=>this.handleClick()} href={::this.getPath('application1')} />
+            <SidebarNavItem eventKey="2" name='Application2' onClick={()=>this.handleClick()} href={::this.getPath('application2')} />
           </DropdownButton>
           </Navbar.Header>
           <Nav>
@@ -186,28 +200,6 @@ class NotificationsMenu extends React.Component {
           </Grid>
         </MenuItem>
       </NavDropdownHover>
-    );
-  }
-}
-
-@withRouter
-class DirectNavItem extends React.Component {
-  render() {
-    var active = false;
-    var currentLocation = this.props.location.pathname;
-
-    if(!active && this.props.path) {
-      active = this.props.router.isActive(this.props.path) && (currentLocation == this.props.path);
-    }
-
-    var classes = classNames({
-      'pressed': active
-    }, this.props.className);
-
-    return (
-      <NavItem className={classes} style={this.props.style} href={this.props.path} to={this.props.path} componentClass={Link}>
-        <Icon bundle={this.props.bundle || 'fontello'} glyph={this.props.glyph} />
-      </NavItem>
     );
   }
 }
@@ -394,8 +386,7 @@ class HeaderNavigation extends React.Component {
   render() {
     return (
       <Nav pullRight>
-        <Nav className='hidden-xs'>
-          <NavItem divider />
+        <Nav>
           <MainMenu />
         </Nav>
       </Nav>
@@ -527,10 +518,10 @@ export default class Header extends React.Component {
           <Col xs={12}>
             <Navbar fixedTop fluid id='rubix-nav-header'>
               <Row>
-                <Col xs={6} sm={8}>
+                <Col xs={9} sm={8}>
                   <Application_Selector/>
                 </Col>
-                <Col xs={3} sm={4} collapseRight className='text-right'>
+                <Col className='text-right'>
                   <HeaderNavigation />
                 </Col>
 

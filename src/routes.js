@@ -6,9 +6,7 @@ import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 
 /* Common Components */
 
-import Sidebar from './common/sidebar';
 import Header from './common/header';
-import Footer from './common/footer';
 
 /* Pages */
 
@@ -39,7 +37,6 @@ class App extends React.Component {
             </Row>
           </Grid>
         </div>
-        <Footer />
       </MainContainer>
     );
   }

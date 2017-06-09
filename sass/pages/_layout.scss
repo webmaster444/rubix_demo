@@ -1,10 +1,37 @@
-#sub_nav {
+#rubix-nav-header #sub_nav {
   background: none;
   border: none;
   margin-bottom: 0px;
   position: fixed;
   left: 1px;
+  
+  .navbar-header{
+    @media (max-width: $screen-md) {
+      float:left;
+    }
+  }
+
+  .navbar-nav{
+    @media (max-width: $screen-md) {
+      margin-left:25px;
+    }
+
+    @media (max-width: 420px){
+      display: none;
+    }
+    li{
+      @media (max-width: $screen-md) {
+        float:left;
+      }
+      a{
+        @media (max-width: $screen-md) {
+          padding: 25px 10px;
+        }
+      }
+    }
+  }
   .menu-darkgreen45{
+
     padding:0px;
     li a{
       padding:10px;
@@ -21,6 +48,17 @@
   padding: 15px 10px;
   ul{
     width: 350px;
+  }
+
+  @media (max-width: $screen-md) {
+    text-align:right;
+  }
+
+  & + .dropdown-menu{
+    @media (max-width: $screen-md) {
+      background: white;
+      position: relative;
+    }
   }
 }
 
@@ -39,5 +77,17 @@
   .modal-body{
     height: 300px;
     overflow-y: scroll;
+  }
+}
+
+.open1{
+  #sub_nav_btn + .dropdown-menu{
+    display:none;
+  }
+}
+
+.close1{
+  #sub_nav_btn + .dropdown-menu{
+    display:block;
   }
 }
