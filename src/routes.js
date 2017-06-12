@@ -7,12 +7,11 @@ import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 /* Common Components */
 
 import Header from './common/header';
-
+import Sidebar from './common/sidebar';
 /* Pages */
 
 import Homepage from './routes/Homepage';
 
-import Dashboard from './routes/Dashboard';
 import Application1 from './routes/Application1';
 import Application2 from './routes/Application2';
 
@@ -27,6 +26,7 @@ class App extends React.Component {
   render() {
     return (
       <MainContainer {...this.props}>
+        <Sidebar />
         <Header />
         <div id='body'>
           <Grid>
@@ -47,7 +47,6 @@ class App extends React.Component {
  */
 const routes = (
   <Route component={App}>
-    <Route path='dashboard' component={Dashboard} />
     <Route path='application1' component={Application1} />
     <Route path='application2' component={Application2} />
     <Route path='fonts' component={Fonts} />

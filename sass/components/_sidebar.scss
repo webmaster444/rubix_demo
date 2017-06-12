@@ -8,4 +8,20 @@
       box-shadow: 0px 0px 0px 6px #273135;
     }
   }
+
+  #sidebar-container{
+  	top:25px !important;
+  }
+
+  #sub_mbl_nav_btn{
+  	margin-left: 30px;
+
+  	& + ul{
+  		padding: 0px;
+  		margin-left: 20px;
+  		li a{
+  			padding: 10px;
+  		}
+  	}
+  }
 }

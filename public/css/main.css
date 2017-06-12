@@ -2442,6 +2442,17 @@
 #sidebar .rubix-timeline-view .rubix-timeline-body li:before {
   box-shadow: 0px 0px 0px 6px #273135; }
 
+#sidebar #sidebar-container {
+  top: 25px !important; }
+
+#sidebar #sub_mbl_nav_btn {
+  margin-left: 30px; }
+  #sidebar #sub_mbl_nav_btn + ul {
+    padding: 0px;
+    margin-left: 20px; }
+    #sidebar #sub_mbl_nav_btn + ul li a {
+      padding: 10px; }
+
 /* Page styles */
 html.authentication {
   background: #43525A !important; }
@@ -3048,6 +3059,10 @@ html.boxed #homepage-container {
       margin-top: 20px;
       padding: 0px 10px; }
 
+@media (min-width: 992px) {
+  #rubix-nav-header {
+    margin-left: 0px !important; } }
+
 #rubix-nav-header #main-menu {
   padding: 15px 10px; }
   #rubix-nav-header #main-menu ul {
@@ -3059,6 +3074,10 @@ html.boxed #homepage-container {
     #rubix-nav-header #main-menu + .dropdown-menu {
       background: white;
       position: relative; } }
+
+@media (min-width: 992px) {
+  #body {
+    margin-left: 0px !important; } }
 
 #notification_btn {
   position: fixed;
@@ -3073,3 +3092,9 @@ html.boxed #homepage-container {
   #notification_modal .modal-body {
     height: 300px;
     overflow-y: scroll; }
+
+.open1 #sub_nav_btn + .dropdown-menu {
+  display: none; }
+
+.close1 #sub_nav_btn + .dropdown-menu {
+  display: block; }

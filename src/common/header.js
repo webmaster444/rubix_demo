@@ -23,14 +23,14 @@ import {
   Row,
   Radio,
   Col,
+  SidebarNavItem,
   PanelContainer,
   Panel,
   PanelHeader,
   PanelBody,
-  DropdownButton,
-  SidebarNavItem,
   Image,
   Modal,
+  DropdownButton,
   OverlayTrigger,
   TimelineView,
   TimelineItem,
@@ -50,14 +50,11 @@ var applications_data = [
 
 @withRouter
 class Application_Selector extends React.Component {
-  constructor(){
-    super();
-    this.state = {
-      menuitemClicked:false,
-      firstTime:true
-    }
+  componentDidMount() {
+    $('#sub_nav a').on('click', function(){
+        $("#sub_nav_btn").click(); //bootstrap 3.x by Richard
+    });
   }
-
   getPath(path) {
     var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
     path = `/${dir}/${path}`;
@@ -72,13 +69,6 @@ class Application_Selector extends React.Component {
     return false;
   }
 
-  handleClick(){
-    this.setState({menuitemClicked:true,firstTime:false});
-  }
-
-  handleBtnClick(){
-    this.setState({menuitemClicked:false,firstTime:false});
-  }
   render() {
     var dir = this.props.location.pathname;
     var index_str = dir.lastIndexOf('/');
@@ -86,19 +76,16 @@ class Application_Selector extends React.Component {
 
     var links_data = ::this.findElement(applications_data,'id',id_str).links;
 
-    var tmp_className;
-    if(!this.state.firstTime){
-      tmp_className = !this.state.menuitemClicked?'close1':'open1';
-    }
     return (
       <Col xs={12}>
         <div>
-        <Navbar fluid bsStyle="inverse" id="sub_nav" className={tmp_className}>
+        <Navbar fluid bsStyle="inverse" id="sub_nav">
           <Navbar.Header>
-          <DropdownButton bsStyle='darkgreen45' title={id_str} className='apps_dropdown' onClick={()=>this.handleBtnClick()} key="test" id="sub_nav_btn">
-            <SidebarNavItem eventKey="1" name='Application1' onClick={()=>this.handleClick()} href={::this.getPath('application1')} />
-            <SidebarNavItem eventKey="2" name='Application2' onClick={()=>this.handleClick()} href={::this.getPath('application2')} />
+          <DropdownButton bsStyle='darkgreen45' title={id_str} className='apps_dropdown' id="sub_nav_btn">
+            <SidebarNavItem href={::this.getPath('application1')} name="Application1" />
+            <SidebarNavItem href={::this.getPath('application2')} name="Application2" />
           </DropdownButton>
+          
           </Navbar.Header>
           <Nav>
           {links_data!=undefined && links_data.map(function(application, i){
@@ -523,10 +510,13 @@ export default class Header extends React.Component {
           <Col xs={12}>
             <Navbar fixedTop fluid id='rubix-nav-header'>
               <Row>
-                <Col xs={9} sm={8}>
+                <Col xs={3} visible='xs'>
+                  <SidebarBtn />
+                </Col>
+                <Col xs={9} sm={8} visible='sm,md,lg'>
                   <Application_Selector/>
                 </Col>
-                <Col className='text-right'>
+                <Col className='text-right' visible="sm,md,lg">
                   <HeaderNavigation />
                 </Col>
 

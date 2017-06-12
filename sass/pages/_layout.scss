@@ -44,21 +44,33 @@
   }
 }
 
-#rubix-nav-header #main-menu{
-  padding: 15px 10px;
-  ul{
-    width: 350px;
+#rubix-nav-header{
+  @media(min-width: $screen-md){
+    margin-left:0px !important;
   }
-
-  @media (max-width: $screen-md) {
-    text-align:right;
-  }
-
-  & + .dropdown-menu{
-    @media (max-width: $screen-md) {
-      background: white;
-      position: relative;
+  
+  #main-menu{
+    padding: 15px 10px;
+    ul{
+      width: 350px;
     }
+
+    @media (max-width: $screen-md) {
+      text-align:right;
+    }
+
+    & + .dropdown-menu{
+      @media (max-width: $screen-md) {
+        background: white;
+        position: relative;
+      }
+    }
+  }
+}
+
+#body{
+  @media(min-width: $screen-md){
+    margin-left: 0px !important;
   }
 }
 
@@ -67,7 +79,6 @@
   right:  20px;
   bottom: 30px;
 }
-
 
 #notification_modal{
   right: 5px;
