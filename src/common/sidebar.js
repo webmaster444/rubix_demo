@@ -23,7 +23,18 @@ class ApplicationSidebar extends React.Component {
   componentDidMount() {
     $('#sidebar a').on('click', function(){
         $("#sub_mbl_nav_btn").click(); //bootstrap 3.x by Richard
+        $('#sidebar_btn a').click();
     });
+
+    // $('#sidebar_btn li').on('click',function(e){
+    //   e.preventDefault();
+    //   console.log('test');
+    // })
+
+    // $('#sidebar_btn a').on('click',function(e){
+      // e.preventDefault();
+      // $('#container').hasClass('container-open')?$('#container').removeClass('container-open'):$('#container').addClass('container-open');
+    // })
   }
 
   handleChange(e) {
@@ -80,7 +91,7 @@ class ApplicationSidebar extends React.Component {
 
                   <SidebarNavItem glyph='icon-stroke-gap-icons-Settings' name='Settings' href={::this.getPath('settings')} />
                   <SidebarNavItem glyph='icon-simple-line-icons-user-follow' href={::this.getPath('account')} name='Account'/>
-                  <SidebarNavItem glyph='icon-fontello-help' href={::this.getPath('panels')} name='Help' />
+                  <SidebarNavItem glyph='icon-fontello-help' href={::this.getPath('help')} name='Help' />
                   <SidebarNavItem glyph='icon-ikons-logout' href='#' onClick={::this.handleLogout} name='Logout' />
                 </SidebarNav>
                 <br />

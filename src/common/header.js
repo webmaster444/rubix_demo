@@ -369,6 +369,47 @@ class MainMenu extends React.Component {
   }
 }
 
+class SidebarButton extends React.Component{
+  componentDidMount(){
+    $(document).click(function(e) {
+      if((e.target.className!="icon-fontello-menu-1 rubix-icon")&&(e.target.id!="sub_mbl_nav_btn")){
+        if($('#container').hasClass('container-open')){
+          $('#container').removeClass('container-open');
+          $('#notification_btn').show();
+        }
+      }else{
+        return;
+      }
+    });
+
+    $('#mbl_nav_btn').on('click',function(){
+      $('#container').toggleClass('container-open');
+      if($('#container').hasClass('container-open')){
+        $('#notification_btn').hide();
+      }else{
+        $('#notification_btn').show();
+      }
+    })
+
+    $('#sidebar a').on('click', function(){
+        $('#mbl_nav_btn').click();
+    });
+
+    // $('body').click(function(evt){    
+    //   if(evt.target.id !='mbl_nav_btn'){
+    //     if($('#container').hasClass('container-open')){
+    //       $('#mbl_nav_btn').click(); 
+    //     }
+    //   }
+    // });
+  }
+  state = {
+    id:'mbl_nav_btn'
+  }
+  render(){
+    return (<Link id={this.props.id}> <Icon bundle='fontello' glyph='menu-1' /> </Link>);
+  }
+}
 @withRouter
 class HeaderNavigation extends React.Component {
   handleLogout(e) {
@@ -510,8 +551,8 @@ export default class Header extends React.Component {
           <Col xs={12}>
             <Navbar fixedTop fluid id='rubix-nav-header'>
               <Row>
-                <Col xs={3} visible='xs'>
-                  <SidebarBtn />
+                <Col xs={1} visible='xs'>
+                  <SidebarButton id="mbl_nav_btn"/>
                 </Col>
                 <Col xs={9} sm={8} visible='sm,md,lg'>
                   <Application_Selector/>

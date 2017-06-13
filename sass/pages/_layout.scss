@@ -49,6 +49,9 @@
     margin-left:0px !important;
   }
   
+  @media(max-width: $screen-md){
+    background: none !important;
+  }
   #main-menu{
     padding: 15px 10px;
     ul{
@@ -71,6 +74,10 @@
 #body{
   @media(min-width: $screen-md){
     margin-left: 0px !important;
+  }
+
+  @media(max-width: $screen-md){
+    margin-top: 0px !important;
   }
 }
 
@@ -100,5 +107,22 @@
 .close1{
   #sub_nav_btn + .dropdown-menu{
     display:block;
+  }
+}
+
+#mbl_nav_btn{
+  font-size:35px;
+}
+
+#main-chart{
+  button{
+    position:absolute;
+    bottom: 5px;
+  }
+}
+
+ul.messenger.messenger-fixed.messenger-on-right, ul.messenger.messenger-fixed.messenger-on-left{
+  @media(max-width: $screen-xs){
+    width: 80%;
   }
 }

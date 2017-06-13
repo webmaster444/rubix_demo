@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { IndexRoute, Route, Redirect} from 'react-router';
+import { IndexRoute, Route, Redirect, IndexRedirect} from 'react-router';
 
 import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 
@@ -47,6 +47,7 @@ class App extends React.Component {
  */
 const routes = (
   <Route component={App}>
+    <IndexRedirect to="/ltr/application1" />
     <Route path='application1' component={Application1} />
     <Route path='application2' component={Application2} />
     <Route path='fonts' component={Fonts} />
@@ -77,7 +78,9 @@ const combinedRoutes = (
 
 export default (
   <Route>
-    <Route path='/' component={Homepage} />
+    <Route path='/'>
+      {combinedRoutes}
+    </Route>
 
     <Route path='/ltr'>
       {combinedRoutes}

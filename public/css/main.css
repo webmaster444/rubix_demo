@@ -3063,6 +3063,10 @@ html.boxed #homepage-container {
   #rubix-nav-header {
     margin-left: 0px !important; } }
 
+@media (max-width: 992px) {
+  #rubix-nav-header {
+    background: none !important; } }
+
 #rubix-nav-header #main-menu {
   padding: 15px 10px; }
   #rubix-nav-header #main-menu ul {
@@ -3078,6 +3082,10 @@ html.boxed #homepage-container {
 @media (min-width: 992px) {
   #body {
     margin-left: 0px !important; } }
+
+@media (max-width: 992px) {
+  #body {
+    margin-top: 0px !important; } }
 
 #notification_btn {
   position: fixed;
@@ -3098,3 +3106,14 @@ html.boxed #homepage-container {
 
 .close1 #sub_nav_btn + .dropdown-menu {
   display: block; }
+
+#mbl_nav_btn {
+  font-size: 35px; }
+
+#main-chart button {
+  position: absolute;
+  bottom: 5px; }
+
+@media (max-width: 480px) {
+  ul.messenger.messenger-fixed.messenger-on-right, ul.messenger.messenger-fixed.messenger-on-left {
+    width: 80%; } }
