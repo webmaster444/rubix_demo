@@ -371,7 +371,7 @@ class MainMenu extends React.Component {
 
 class SidebarButton extends React.Component{
   componentDidMount(){
-    $(document).click(function(e) {
+    $(document).on('click',function(e) {
       if((e.target.className!="icon-fontello-menu-1 rubix-icon")&&(e.target.id!="sub_mbl_nav_btn")){
         if($('#container').hasClass('container-open')){
           $('#container').removeClass('container-open');
@@ -394,14 +394,10 @@ class SidebarButton extends React.Component{
     $('#sidebar a').on('click', function(){
         $('#mbl_nav_btn').click();
     });
+  }
 
-    // $('body').click(function(evt){    
-    //   if(evt.target.id !='mbl_nav_btn'){
-    //     if($('#container').hasClass('container-open')){
-    //       $('#mbl_nav_btn').click(); 
-    //     }
-    //   }
-    // });
+  swiping(e){
+    console.log(e);
   }
   state = {
     id:'mbl_nav_btn'

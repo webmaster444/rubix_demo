@@ -68,6 +68,17 @@ class WeatherPanel extends React.Component {
     $('#datetimepicker1-parent').datetimepicker({
       inline: true,
     });
+    $("#datetimepicker1-parent").on("dp.change", function (e) {
+      if($('#container').hasClass('container-open')){
+          $('#container').removeClass('container-open');
+          $('#notification_btn').show();
+          e.preventDefault();
+      }
+    });
+  }
+
+  exampleFunction(){
+    console.log('testing');
   }
   render() {
     return (
@@ -107,7 +118,7 @@ class WeatherPanel extends React.Component {
   }
 }
 
-export default class Application1 extends React.Component {
+export default class Application2 extends React.Component {
   render() {
     return (
       <div className='dashboard'>

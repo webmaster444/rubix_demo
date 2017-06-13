@@ -79,6 +79,11 @@
   @media(max-width: $screen-md){
     margin-top: 0px !important;
   }
+  & > div{
+    @media(max-width: $screen-md){
+      padding-top: 120px !important;
+    }
+  }
 }
 
 #notification_btn{
