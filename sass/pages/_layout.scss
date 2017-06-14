@@ -79,14 +79,22 @@
   @media(max-width: $screen-md){
     margin-top: 0px !important;
   }
+
   & > div{
     @media(max-width: $screen-md){
-      padding-top: 120px !important;
+      padding-top: 0px !important;
     }
   }
 }
 
-#notification_btn{
+html.touchevents #body{
+  & > div{
+    @media(max-width: $screen-md){
+      padding-top: 120px !important;
+    }
+  }  
+}
+.notification_btn{
   position: fixed;
   right:  20px;
   bottom: 30px;

@@ -557,10 +557,16 @@ export default class Header extends React.Component {
                   <HeaderNavigation />
                 </Col>
 
-                <Button id="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal}>
+                <Col visible="sm,md,lg">
+                <Button id="notification_btn1" className="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal}>
                   Notifications
                 </Button>
-
+                </Col>
+                <Col visible="xs">
+                <Button id="notification_btn" className="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal}>
+                  +
+                </Button>
+                </Col>
                 <SpecialModal ref={(c) => this.specialModal = c} />
         
               </Row>
