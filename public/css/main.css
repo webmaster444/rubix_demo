@@ -3089,12 +3089,19 @@ html.boxed #homepage-container {
 
 @media (max-width: 992px) {
   #body > div {
+    padding-top: 0px !important; } }
+
+@media (max-width: 992px) {
+  html.touchevents #body > div {
     padding-top: 120px !important; } }
 
-#notification_btn {
+.notification_btn {
   position: fixed;
   right: 20px;
   bottom: 30px; }
+
+#notification_btn {
+  padding: 9px 10px 7px 11px !important; }
 
 #notification_modal {
   right: 5px;

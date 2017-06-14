@@ -563,8 +563,8 @@ export default class Header extends React.Component {
                 </Button>
                 </Col>
                 <Col visible="xs">
-                <Button id="notification_btn" className="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal}>
-                  +
+                <Button id="notification_btn" className="notification_btn" bsStyle='primary' onClick={::this.launchSpecialModal} rounded>
+                  <Icon glyph="icon-fontello-plus-1" />
                 </Button>
                 </Col>
                 <SpecialModal ref={(c) => this.specialModal = c} />

@@ -72,14 +72,14 @@ class WeatherPanel extends React.Component {
       if($('#container').hasClass('container-open')){
           $('#container').removeClass('container-open');
           $('#notification_btn').show();
-          e.preventDefault();
+          var d = new Date(e.oldDate);
+          console.log(e);
+          console.log(e.oldDate);
+          $('#datetimepicker1-parent').data("DateTimePicker").date(d);
       }
     });
   }
 
-  exampleFunction(){
-    console.log('testing');
-  }
   render() {
     return (
       <PanelContainer>
