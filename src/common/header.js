@@ -397,20 +397,20 @@ class SidebarButton extends React.Component{
         $('#mbl_nav_btn').click();
     });
 
-    window.addEventListener( 'touchstart', function(e) {
-      e.preventDefault();   
-      startX = e.targetTouches[0].pageX;
-    }, false );
+    // window.addEventListener( 'touchstart', function(e) {
+    //   e.preventDefault();   
+    //   startX = e.targetTouches[0].pageX;
+    // }, false );
 
-    window.addEventListener( 'touchmove', function(e) {
-      e.preventDefault();
-        var diffX = e.changedTouches[0].pageX - startX;
-        if ( diffX <= -30 && $('#container').hasClass('container-open') == true) {
-            $('#container').removeClass('container-open');
-            $('#notification_btn').show();
-        };
+    // window.addEventListener( 'touchmove', function(e) {
+    //   e.preventDefault();
+    //     var diffX = e.changedTouches[0].pageX - startX;
+    //     if ( diffX <= -30 && $('#container').hasClass('container-open') == true) {
+    //         $('#container').removeClass('container-open');
+    //         $('#notification_btn').show();
+    //     };
 
-    }, false );
+    // }, false );
   }
 
   swiping(e){
