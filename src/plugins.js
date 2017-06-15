@@ -1,18 +1,18 @@
 /* Import your third-Party plugins here */
 
-import 'js/jquery.js';
+import 'js/jquery.min.js';
 import 'js/modernizr.js';
-import 'js/perfect-scrollbar.js';
-import 'js/l20n.js';
+import 'js/perfect-scrollbar.min.js';
+import 'js/l20n.min.js';
 
 import "js/vendor/prism/prism.js";
-import "js/vendor/select2/select2.js";
-import 'js/vendor/timeline/timeline.js';
-import "js/vendor/ion.rangeSlider/ion.rangeSlider.js";
+import "js/vendor/select2/select2.min.js";
+import 'js/vendor/timeline/timeline.min.js';
+import "js/vendor/ion.rangeSlider/ion.rangeSlider.min.js";
 
-import 'bower_components/d3/d3.js';
-import "bower_components/c3/c3.js";
-import 'bower_components/Chart.js/Chart.js';
+import 'bower_components/d3/d3.min.js';
+import "bower_components/c3/c3.min.js";
+import 'bower_components/Chart.js/Chart.min.js';
 import 'bower_components/gmaps/gmaps.min.js';
 import "bower_components/raphael/raphael.min.js";
 import "bower_components/morris.js/morris.min.js";
@@ -43,8 +43,8 @@ import "bower_components/x-editable/dist/inputs-ext/address/address.js";
 import "bower_components/x-editable/dist/inputs-ext/typeaheadjs/typeaheadjs.js";
 import 'bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js';
 import "bower_components/datatables/media/js/jquery.dataTables.js";
-import "js/vendor/fullcalendar/fullcalendar.js";
-import "js/vendor/datatables/responsive.js";
-import "js/vendor/jcrop/color.js";
+import "js/vendor/fullcalendar/fullcalendar.min.js";
+import "js/vendor/datatables/responsive.min.js";
+import "js/vendor/jcrop/color.min.js";
 import "js/vendor/jcrop/jcrop.js";
-import 'js/rubix.js';
+import 'js/rubix.min.js';

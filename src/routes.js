@@ -10,8 +10,6 @@ import Header from './common/header';
 import Sidebar from './common/sidebar';
 /* Pages */
 
-import Homepage from './routes/Homepage';
-
 import Application1 from './routes/Application1';
 import Application2 from './routes/Application2';
 
