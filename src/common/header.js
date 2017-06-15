@@ -408,9 +408,6 @@ class SidebarButton extends React.Component{
         if ( diffX <= -30 && $('#container').hasClass('container-open') == true) {
             $('#container').removeClass('container-open');
             $('#notification_btn').show();
-        } else if(diffX>= 30 && $('#container').hasClass('container-open') == false) {
-            $('#container').addClass('container-open');
-            $('#notification_btn').hide();
         };
 
     }, false );
