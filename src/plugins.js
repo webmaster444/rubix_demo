@@ -1,7 +1,7 @@
 /* Import your third-Party plugins here */
 
-import 'js/modernizr.js';
 import 'js/jquery.js';
+import 'js/modernizr.js';
 import 'js/perfect-scrollbar.js';
 import 'js/l20n.js';
 
@@ -47,5 +47,4 @@ import "js/vendor/fullcalendar/fullcalendar.js";
 import "js/vendor/datatables/responsive.js";
 import "js/vendor/jcrop/color.js";
 import "js/vendor/jcrop/jcrop.js";
-
 import 'js/rubix.js';
