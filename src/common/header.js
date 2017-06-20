@@ -40,14 +40,30 @@ import {
   TimelineTitle
 } from '@sketchpixy/rubix';
 
-var applications_data = [ 
-  { 
-    name:"Application1",id:"application1",links:[{"label":"Link1","href":"/link1"},{"label":"Link2","href":"/link2"}]
-  },{
-    name:"Application2",id:"application2",links:[{"label":"Link21","href":"/link21"},{"label":"Link22","href":"/link22"}]
-  }
-];
+// var applications_data = [ 
+//   { 
+//     name:"Application1",id:"application1",links:[{"label":"Link1","href":"/link1"},{"label":"Link2","href":"/link2"}]
+//   },{
+//     name:"Application2",id:"application2",links:[{"label":"Link21","href":"/link21"},{"label":"Link22","href":"/link22"}]
+//   }
+// ];
 
+var applications_data = [
+{
+  "description": "Search and Retrieve Stored Files",
+  "name": "storage",
+  "title": "storage",
+  "version": 1,
+  "views": [
+    {
+      "component": "viewDownloadFiles",
+      "menus": [
+        "mnuSearchFiles"
+      ],
+      "name": "viewDownload"
+    }
+  ]
+}];
 var startX = 0
 
 @withRouter
@@ -70,13 +86,27 @@ class Application_Selector extends React.Component {
     }
     return false;
   }
-
+  
   render() {
     var dir = this.props.location.pathname;
     var index_str = dir.lastIndexOf('/');
     var id_str = dir.substr(index_str + 1);
 
-    var links_data = ::this.findElement(applications_data,'id',id_str).links;
+    var links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+
+    let submenu_items=[];
+    if(links_data !=undefined){
+      links_data.map(function(application, i){
+        submenu_items.push(<NavItem eventKey={i} >{application}</NavItem>);
+      })
+    }else{
+      submenu_items = <span> </span>;
+    }
+
+    let applications_list = [];
+    applications_data.map(function(application,i){
+      applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
+    })
 
     return (
       <Col xs={12}>
@@ -84,15 +114,12 @@ class Application_Selector extends React.Component {
         <Navbar fluid bsStyle="inverse" id="sub_nav">
           <Navbar.Header>
           <DropdownButton bsStyle='darkgreen45' title={id_str} className='apps_dropdown' id="sub_nav_btn">
-            <SidebarNavItem href={::this.getPath('application1')} name="Application1" />
-            <SidebarNavItem href={::this.getPath('application2')} name="Application2" />
+            {applications_list}
           </DropdownButton>
           
           </Navbar.Header>
           <Nav>
-          {links_data!=undefined && links_data.map(function(application, i){
-            return (<NavItem eventKey={i} >{application.label}</NavItem>)
-          })}
+            {submenu_items}
           </Nav>
         </Navbar>
         </div>
@@ -411,9 +438,6 @@ class SidebarButton extends React.Component{
     }, false );
   }
 
-  swiping(e){
-    console.log(e);
-  }
   state = {
     id:'mbl_nav_btn'
   }

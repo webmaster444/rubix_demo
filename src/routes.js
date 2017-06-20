@@ -13,12 +13,11 @@ import Sidebar from './common/sidebar';
 import Application1 from './routes/Application1';
 import Application2 from './routes/Application2';
 
-import Fonts from './routes/Fonts';
-
-import Login from './routes/Login';
 import Signup from './routes/Signup';
 
-import Lock from './routes/Lock';
+import Auth from './Auth.js';
+import Login from './routes/Login';
+import Storage from './routes/Storage';
 
 class App extends React.Component {
   render() {
@@ -45,10 +44,7 @@ class App extends React.Component {
  */
 const routes = (
   <Route component={App}>
-    <IndexRedirect to="/ltr/application1" />
-    <Route path='application1' component={Application1} />
-    <Route path='application2' component={Application2} />
-    <Route path='fonts' component={Fonts} />
+    <Route path='storage' component={Storage} />
   </Route>
 );
 
@@ -57,7 +53,6 @@ const routes = (
  */
 const basicRoutes = (
   <Route>
-    <Route path='lock' component={Lock} />
     <Route path='login' component={Login} />
     <Route path='signup' component={Signup} />
   </Route>
@@ -74,10 +69,31 @@ const combinedRoutes = (
   </Route>
 );
 
+class EnsureLoggedInContainer extends React.Component {
+  componentDidMount() {
+    console.log('heree');
+    if (!Auth.isUserAuthenticated()) {
+      browserHistory.replace("/login");
+    }
+  }
+
+  render() {
+    if (Auth.isUserAuthenticated()) {
+      return this.props.children
+    } else {
+      return null
+    }
+  }
+}
+
 export default (
   <Route>
-    <Route path='/'>
-      {combinedRoutes}
+    <Route path='/' component={App}>
+      <IndexRedirect to="ltr/login" />
+      <Route path='login' component={Login} />
+      <Route component={EnsureLoggedInContainer}>
+        <Route path='storage' component={Storage} />
+      </Route>
     </Route>
 
     <Route path='/ltr'>

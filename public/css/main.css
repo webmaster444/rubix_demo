@@ -2451,7 +2451,8 @@
     padding: 0px;
     margin-left: 20px; }
     #sidebar #sub_mbl_nav_btn + ul li a {
-      padding: 10px; }
+      padding: 10px;
+      text-transform: capitalize; }
 
 /* Page styles */
 /* Layout styles */
@@ -2479,7 +2480,8 @@
   #rubix-nav-header #sub_nav .menu-darkgreen45 {
     padding: 0px; }
     #rubix-nav-header #sub_nav .menu-darkgreen45 li a {
-      padding: 10px; }
+      padding: 10px;
+      text-transform: capitalize; }
     #rubix-nav-header #sub_nav .menu-darkgreen45 button {
       margin-top: 20px;
       padding: 0px 10px; }

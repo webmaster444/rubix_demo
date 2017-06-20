@@ -11,11 +11,21 @@ import {
 import { Link, withRouter } from 'react-router';
 
 var applications_data = [ 
-  { 
-    name:"Application1",id:"application1",links:[{"label":"Link1","href":"/link1"},{"label":"Link2","href":"/link2"}]
-  },{
-    name:"Application2",id:"application2",links:[{"label":"Link21","href":"/link21"},{"label":"Link22","href":"/link22"}]
-  }
+{
+  "description": "Search and Retrieve Stored Files",
+  "name": "storage",
+  "title": "storage",
+  "version": 1,
+  "views": [
+    {
+      "component": "viewDownloadFiles",
+      "menus": [
+        "mnuSearchFiles"
+      ],
+      "name": "viewDownload"
+    }
+  ]
+}
 ];
 
 @withRouter
@@ -25,16 +35,6 @@ class ApplicationSidebar extends React.Component {
         $("#sub_mbl_nav_btn").click(); //bootstrap 3.x by Richard
         $('#sidebar_btn a').click();
     });
-
-    // $('#sidebar_btn li').on('click',function(e){
-    //   e.preventDefault();
-    //   console.log('test');
-    // })
-
-    // $('#sidebar_btn a').on('click',function(e){
-      // e.preventDefault();
-      // $('#container').hasClass('container-open')?$('#container').removeClass('container-open'):$('#container').addClass('container-open');
-    // })
   }
 
   handleChange(e) {
@@ -63,7 +63,22 @@ class ApplicationSidebar extends React.Component {
     var index_str = dir.lastIndexOf('/');
     var id_str = dir.substr(index_str + 1);
 
-    var links_data = ::this.findElement(applications_data,'id',id_str).links;
+    var links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+
+    let submenu_items=[];
+    if(links_data !=undefined){
+      links_data.map(function(application, i){
+        submenu_items.push(<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application} />);
+      })
+    }else{
+      submenu_items = <span> </span>;
+    }
+
+    let applications_list = [];
+    applications_data.map(function(application,i){
+      applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
+    })
+
     return (
       <div>
         <Grid>
@@ -73,19 +88,14 @@ class ApplicationSidebar extends React.Component {
                 <SidebarNav style={{marginBottom: 0}} ref={(c) => this._nav = c}>
 
                   <DropdownButton bsStyle='darkgreen45' title={id_str} id="sub_mbl_nav_btn">
-                    <SidebarNavItem href={::this.getPath('application1')} name="Application1" />
-                    <SidebarNavItem href={::this.getPath('application2')} name="Application2" />
+                    {applications_list}
                   </DropdownButton>
 
                   <SidebarDivider />
                   { /** Pages Section */ }
-                  <div className='sidebar-header'>PAGES</div>
-
-                  {links_data!=undefined && links_data.map(function(application, i){
-                    return (<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application.label} />)
-                  })}
+                  <div className='sidebar-header'>MENU</div>
+                  {submenu_items}
                   <SidebarDivider />
-
                   { /** Components Section */ }
                   <div className='sidebar-header'>MAIM MENU</div>
 

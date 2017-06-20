@@ -1,120 +1,167 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Link, withRouter } from 'react-router';
+import { browserHistory } from 'react-router';
 
-import {
-  Row,
-  Col,
-  Icon,
-  Grid,
-  Form,
-  Badge,
-  Panel,
-  Button,
-  PanelBody,
-  FormGroup,
-  LoremIpsum,
-  InputGroup,
-  FormControl,
-  ButtonGroup,
-  ButtonToolbar,
-  PanelContainer,
-} from '@sketchpixy/rubix';
+import { Grid, Row, Col, Form, FormGroup, Button, ControlLabel, FormControl, Checkbox, Modal} from '@sketchpixy/rubix';
+import Panelunit from '../common/PanelUnit';
+import Auth from '../Auth.js';
+import settings from '../settings.js';
 
-@withRouter
 export default class Login extends React.Component {
-  back(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.props.router.goBack();
-  }
+	constructor(props) {
+		super(props);
+		this.openResetModal = this.openResetModal.bind(this);
+		this.closeResetModal = this.closeResetModal.bind(this);
+		this.changeEmail = this.changeEmail.bind(this);
+		this.sendPwResetLink = this.sendPwResetLink.bind(this);
+		this.state = {
+			pwResetModal: false,
+			email: ''
+		}
+	}
+	componentDidMount() {
+		Messenger.options = { theme: 'flat' };
+	}
+	changeEmail(e){
+		this.setState({email: e.target.value});
+		// const isValidEmail = e.target.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+		// if(isValidEmail){
+		// 	$('#sendBtn').removeAttr('disabled');
+		// }
+	}
+	openResetModal(){
+		this.setState({ pwResetModal: true });
+	}
+	closeResetModal(){
+		this.setState({ pwResetModal: false });
+	}
+	sendPwResetLink(){
+		this.closeResetModal();
+		Messenger({
+			extraClasses: 'messenger-fixed messenger-on-top'
+		}).post({
+			id: 'resetpassword',
+			overlayClosesOnClick: false,
+			singleton: false,
+			showCloseButton: true,
+			message: `Password reset link has been sent!`
+		});
+	}
+	submitForm(e){
+		e.preventDefault();
 
-  componentDidMount() {
-    $('html').addClass('authentication');
-  }
+		var user = $('input[name=user]').val();
+		var password = $('input[name=password]').val();
+		if (user == "" || password == "") {
+			Messenger({
+				extraClasses: 'messenger-fixed messenger-on-top'
+			}).post({
+				id: 'nothingInputCredential',
+				type: 'error',
+				singleton: false,
+				showCloseButton: true,
+				message: 'Please input user name and password!'
+			});
+			return false;
+		}
+		var form = new FormData();
+		form.append("user", user);
+		form.append("password", password);
+		form.append("auth_token", "uTDfRK4WPtpchbr3mHsIsftXmBlw6VWVakHvPiIGWoc=");
 
-  componentWillUnmount() {
-    $('html').removeClass('authentication');
-  }
+		$.ajax({
+			"method": "POST",
+			"crossDomain": true,
+			"dataType": 'json',
+			"processData": false,
+			"contentType": false,
+			"mimeType": "multipart/form-data",
+			"url": settings.apiBase+"/api/v1/login",
+			"data": form
+		})
+		.done(function (response) {
+			Auth.authenticateUser(response.sessionId);
+			browserHistory.push('/storage');
+		})
+		.fail(function( jqXHR, textStatus ) {
+			Messenger({
+				extraClasses: 'messenger-fixed messenger-on-top'
+			}).post({
+				type: 'error',
+				singleton: false,
+				showCloseButton: true,
+				message: 'You have entered an incorrect user name, email combination, please retry!'
+			});
+		});
+	}
+	render() {
+		return (
+			<div className="loginPage">
+				<Row>
+					<Col sm={4}>
+					</Col>
+					<Col sm={4}>
+						<div style={{marginTop: '50px'}}>
+							<Panelunit title="Login">
+								<div className="login_body">
+									<h1>Storage Search System</h1>
+									<Form horizontal>
+										<FormGroup controlId="formHorizontalEmail">
+											<Col componentClass={ControlLabel} sm={3}>
+												User name
+											</Col>
+											<Col sm={9}>
+												<FormControl type="text" placeholder="User name" name="user"/>
+											</Col>
+										</FormGroup>
 
-  getPath(path) {
-    var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
-    path = `/${dir}/${path}`;
-    return path;
-  }
+										<FormGroup controlId="formHorizontalPassword">
+											<Col componentClass={ControlLabel} sm={3}>
+												Password
+											</Col>
+											<Col sm={9}>
+												<FormControl type="password" placeholder="Password" name="password"/>
+											</Col>
+										</FormGroup>
 
-  render() {
-    return (
-      <div id='auth-container' className='login'>
-        <div id='auth-row'>
-          <div id='auth-cell'>
-            <Grid>
-              <Row>
-                <Col sm={4} smOffset={4} xs={10} xsOffset={1} collapseLeft collapseRight>
-                  <PanelContainer controls={false}>
-                    <Panel>
-                      <PanelBody style={{padding: 0}}>
-                        <div className='text-center bg-darkblue fg-white'>
-                          <h3 style={{margin: 0, padding: 25}}>Sign in to Rubix</h3>
-                        </div>
-                        <div className='bg-hoverblue fg-black50 text-center' style={{padding: 12.5}}>
-                          <div>You need to sign in for those awesome features</div>
-                          <div style={{marginTop: 12.5, marginBottom: 12.5}}>
-                            <Button id='facebook-btn' lg bsStyle='darkblue' type='submit' onClick={::this.back}>
-                              <Icon glyph='icon-fontello-facebook' />
-                              <span>Sign in <span className='hidden-xs'>with facebook</span></span>
-                            </Button>
-                          </div>
-                          <div>
-                            <a id='twitter-link' href='#' onClick={::this.back}><Icon glyph='icon-fontello-twitter' /><span> or with twitter</span></a>
-                          </div>
-                        </div>
-                        <div>
-                          <div className='text-center' style={{padding: 12.5}}>
-                            or use your Rubix account
-                          </div>
-                          <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                            <Form onSubmit={::this.back}>
-                              <FormGroup controlId='emailaddress'>
-                                <InputGroup bsSize='large'>
-                                  <InputGroup.Addon>
-                                    <Icon glyph='icon-fontello-mail' />
-                                  </InputGroup.Addon>
-                                  <FormControl autoFocus type='email' className='border-focus-blue' placeholder='support@sketchpixy.com' />
-                                </InputGroup>
-                              </FormGroup>
-                              <FormGroup controlId='password'>
-                                <InputGroup bsSize='large'>
-                                  <InputGroup.Addon>
-                                    <Icon glyph='icon-fontello-key' />
-                                  </InputGroup.Addon>
-                                  <FormControl type='password' className='border-focus-blue' placeholder='password' />
-                                </InputGroup>
-                              </FormGroup>
-                              <FormGroup>
-                                <Grid>
-                                  <Row>
-                                    <Col xs={6} collapseLeft collapseRight style={{paddingTop: 10}}>
-                                      <Link to={::this.getPath('signup')}>Create a Rubix account</Link>
-                                    </Col>
-                                    <Col xs={6} collapseLeft collapseRight className='text-right'>
-                                      <Button outlined lg type='submit' bsStyle='blue' onClick={::this.back}>Login</Button>
-                                    </Col>
-                                  </Row>
-                                </Grid>
-                              </FormGroup>
-                            </Form>
-                          </div>
-                        </div>
-                      </PanelBody>
-                    </Panel>
-                  </PanelContainer>
-                </Col>
-              </Row>
-            </Grid>
-          </div>
-        </div>
-      </div>
-    );
-  }
+										<FormGroup >
+											<Col sm={12}>
+												<a onClick={this.openResetModal} style={{float: 'right', cursor: 'pointer'}} > Forgot password? </a>
+											</Col>
+										</FormGroup>
+
+										<FormGroup>
+											<Col smOffset={3} sm={9}>
+												<Button type="submit" onClick={this.submitForm} style={{float: 'right'}}>
+													Login
+												</Button>
+											</Col>
+										</FormGroup>
+									</Form>
+								</div>
+							</Panelunit>
+						</div>
+					</Col>
+					<Col sm={4}>
+					</Col>
+				</Row>
+				<Modal show={this.state.pwResetModal} onHide={this.closeResetModal} id='passwordResetModal'>
+					<Modal.Header closeButton>
+						<Modal.Title>Password Reset</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<FormGroup>
+							<ControlLabel>Please enter your email for reset instructions!</ControlLabel>
+							<FormControl id='resetEmail' type='email' autoFocus placeholder='Email' onChange={this.changeEmail}/>
+						</FormGroup>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={this.closeResetModal} >Close</Button>
+						<Button onClick={this.sendPwResetLink} id='sendBtn' bsStyle='primary' disabled={!this.state.email}>Send</Button>
+					</Modal.Footer>
+				</Modal>
+			</div>
+		);
+	}
 }
+
