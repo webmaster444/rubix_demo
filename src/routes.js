@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { IndexRoute, Route, Redirect, IndexRedirect} from 'react-router';
+import {Router,Route,browserHistory, IndexRedirect} from 'react-router';
 
 import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 
@@ -10,15 +10,10 @@ import Header from './common/header';
 import Sidebar from './common/sidebar';
 /* Pages */
 
-import Application1 from './routes/Application1';
-import Application2 from './routes/Application2';
-
-import Signup from './routes/Signup';
-
-import Auth from './Auth.js';
 import Login from './routes/Login';
+import Signup from './routes/Signup';
 import Storage from './routes/Storage';
-
+import Auth from './Auth.js';
 class App extends React.Component {
   render() {
     return (
@@ -39,13 +34,43 @@ class App extends React.Component {
   }
 }
 
+class EnsureLoggedInContainer extends React.Component {
+  componentDidMount() {
+    console.log('didmount');
+    if (!Auth.isUserAuthenticated()) {
+      browserHistory.replace("/ltr/login");
+    }
+  }
+
+  render() {
+    console.log('HHHHHHHHHHH');
+    if (Auth.isUserAuthenticated()) {
+      return this.props.children
+    } else {
+      console.log('not - authenticated');
+      return null
+    }
+  }
+}
+
+const isLoggedIn = (nextState, replace) => {
+  if (Auth.isUserAuthenticated()) {
+    console.log('111111111');
+    replace({ pathname: '/ltr/storage' })
+  }
+}
+
 /**
  * Includes Sidebar, Header and Footer.
  */
 const routes = (
-  <Route component={App}>
-    <Route path='storage' component={Storage} />
-  </Route>
+
+    <Route component={App}>
+      <IndexRedirect to="/ltr/storage" />
+      <Route component={EnsureLoggedInContainer}>
+      <Route path="storage" component={Storage} />
+      </Route>
+    </Route>
 );
 
 /**
@@ -53,7 +78,7 @@ const routes = (
  */
 const basicRoutes = (
   <Route>
-    <Route path='login' component={Login} />
+    <Route path='login' onEnter={isLoggedIn} component={Login} />
     <Route path='signup' component={Signup} />
   </Route>
 );
@@ -69,38 +94,18 @@ const combinedRoutes = (
   </Route>
 );
 
-class EnsureLoggedInContainer extends React.Component {
-  componentDidMount() {
-    console.log('heree');
-    if (!Auth.isUserAuthenticated()) {
-      browserHistory.replace("/login");
-    }
-  }
 
-  render() {
-    if (Auth.isUserAuthenticated()) {
-      return this.props.children
-    } else {
-      return null
-    }
-  }
-}
 
 export default (
-  <Route>
-    <Route path='/' component={App}>
-      <IndexRedirect to="ltr/login" />
-      <Route path='login' component={Login} />
-      <Route component={EnsureLoggedInContainer}>
-        <Route path='storage' component={Storage} />
-      </Route>
+  <Router>
+    <Route path='/'>
+      {combinedRoutes}
     </Route>
-
     <Route path='/ltr'>
       {combinedRoutes}
     </Route>
     <Route path='/rtl'>
       {combinedRoutes}
     </Route>
-  </Route>
+  </Router>
 );
