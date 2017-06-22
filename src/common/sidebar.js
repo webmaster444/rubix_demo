@@ -63,22 +63,26 @@ class ApplicationSidebar extends React.Component {
     var index_str = dir.lastIndexOf('/');
     var id_str = dir.substr(index_str + 1);
 
-    var links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+    var links_data = [],submenu_items=[],applications_list=[];
+    var tmp_str = ::this.findElement(applications_data,'name',id_str);
 
-    let submenu_items=[];
-    if(links_data !=undefined){
-      links_data.map(function(application, i){
-        submenu_items.push(<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application} />);
+    if(tmp_str){
+      links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+
+      submenu_items=[];
+      if(links_data !=undefined){
+        links_data.map(function(application, i){
+          submenu_items.push(<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application} />);
+        })
+      }else{
+        submenu_items = <span> </span>;
+      }
+
+      applications_list = [];
+      applications_data.map(function(application,i){
+        applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
       })
-    }else{
-      submenu_items = <span> </span>;
     }
-
-    let applications_list = [];
-    applications_data.map(function(application,i){
-      applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
-    })
-
     return (
       <div>
         <Grid>

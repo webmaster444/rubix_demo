@@ -13,7 +13,6 @@ import Sidebar from './common/sidebar';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
 import Storage from './routes/Storage';
-import Auth from './Auth.js';
 class App extends React.Component {
   render() {
     return (
@@ -53,23 +52,14 @@ class EnsureLoggedInContainer extends React.Component {
   }
 }
 
-const isLoggedIn = (nextState, replace) => {
-  if (Auth.isUserAuthenticated()) {
-    console.log('111111111');
-    replace({ pathname: '/ltr/storage' })
-  }
-}
-
 /**
  * Includes Sidebar, Header and Footer.
  */
 const routes = (
 
     <Route component={App}>
-      <IndexRedirect to="/ltr/storage" />
-      <Route component={EnsureLoggedInContainer}>
+      <IndexRedirect to="ltr/storage" />
       <Route path="storage" component={Storage} />
-      </Route>
     </Route>
 );
 
@@ -78,7 +68,7 @@ const routes = (
  */
 const basicRoutes = (
   <Route>
-    <Route path='login' onEnter={isLoggedIn} component={Login} />
+    <Route path='login' component={Login} />
     <Route path='signup' component={Signup} />
   </Route>
 );

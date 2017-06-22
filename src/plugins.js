@@ -9,6 +9,7 @@ import "js/vendor/prism/prism.js";
 import "js/vendor/select2/select2.min.js";
 import 'js/vendor/timeline/timeline.min.js';
 import "js/vendor/ion.rangeSlider/ion.rangeSlider.min.js";
+import "js/vendor/Simple-jQuery-Loading-Spinner-Overlay-Plugin-Loader/jquery-loader.js";
 
 import 'bower_components/d3/d3.min.js';
 import "bower_components/c3/c3.min.js";
