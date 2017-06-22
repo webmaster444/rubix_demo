@@ -4,6 +4,7 @@
   margin-bottom: 0px;
   position: fixed;
   left: 1px;
+  box-shadow: none;
   
   .navbar-header{
     @media (max-width: $screen-md) {
@@ -52,9 +53,11 @@
   
   @media(max-width: $screen-md){
     background: none !important;
+    box-shadow: none;
   }
   #main-menu{
     padding: 15px 10px;
+    z-index: 1100;
     ul{
       width: 350px;
     }

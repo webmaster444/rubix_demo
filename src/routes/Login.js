@@ -81,7 +81,7 @@ export default class Login extends React.Component {
 		})
 		.done(function (response) {
 			Auth.authenticateUser(response.sessionId);
-			browserHistory.push('/storage');
+			browserHistory.push('ltr/storage');
 		})
 		.fail(function( jqXHR, textStatus ) {
 			Messenger({
@@ -111,7 +111,7 @@ export default class Login extends React.Component {
 												User name
 											</Col>
 											<Col sm={9}>
-												<FormControl type="text" placeholder="User name" name="user"/>
+												<FormControl type="email" placeholder="User name" name="user"/>
 											</Col>
 										</FormGroup>
 

@@ -40,14 +40,6 @@ import {
   TimelineTitle
 } from '@sketchpixy/rubix';
 
-// var applications_data = [ 
-//   { 
-//     name:"Application1",id:"application1",links:[{"label":"Link1","href":"/link1"},{"label":"Link2","href":"/link2"}]
-//   },{
-//     name:"Application2",id:"application2",links:[{"label":"Link21","href":"/link21"},{"label":"Link22","href":"/link22"}]
-//   }
-// ];
-
 var applications_data = [
 {
   "description": "Search and Retrieve Stored Files",
@@ -92,21 +84,26 @@ class Application_Selector extends React.Component {
     var index_str = dir.lastIndexOf('/');
     var id_str = dir.substr(index_str + 1);
 
-    var links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+    var links_data = [],submenu_items=[],applications_list=[];
+    var tmp_str = ::this.findElement(applications_data,'name',id_str);
 
-    let submenu_items=[];
-    if(links_data !=undefined){
-      links_data.map(function(application, i){
-        submenu_items.push(<NavItem eventKey={i} >{application}</NavItem>);
+    if(tmp_str){
+      links_data = ::this.findElement(applications_data,'name',id_str).views[0].menus;
+
+      submenu_items=[];
+      if(links_data !=undefined){
+        links_data.map(function(application, i){
+          submenu_items.push(<SidebarNavItem eventKey={i} name={application} />);
+        })
+      }else{
+        submenu_items = <span> </span>;
+      }
+
+      applications_list = [];
+      applications_data.map(function(application,i){
+        applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
       })
-    }else{
-      submenu_items = <span> </span>;
     }
-
-    let applications_list = [];
-    applications_data.map(function(application,i){
-      applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
-    })
 
     return (
       <Col xs={12}>
@@ -381,17 +378,17 @@ class MainMenu extends React.Component {
 
     return (
       <NavDropdownHover noCaret eventKey={4} title={cogIcon} id='main-menu' className='header-menu small-font'>
-        <MenuItem eventKey='home' href="#home">
-          <span> Home</span>
+        <MenuItem eventKey='help'  glyph='icon-stroke-gap-icons-Settings' href="#home">
+          <span> Help</span>
         </MenuItem>
-        <MenuItem href="/customers">
-          <span> Customers </span>
+        <MenuItem href="/account">
+          <span> Account </span>
         </MenuItem>
-        <MenuItem href="/vehicles">
-          <span> Vehicles </span>
+        <MenuItem href="/settings">
+          <span> Settings </span>
         </MenuItem>
-        <MenuItem href="/contact" >
-          <span> Contact </span>
+        <MenuItem href="/logout" >
+          <span> Logout </span>
         </MenuItem>
       </NavDropdownHover>
     );

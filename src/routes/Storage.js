@@ -52,7 +52,6 @@ export default class Home extends React.Component {
 	}
 	datepickerInit(){
         var that=this;
-        console.log(that.date_start)
 		// $("#start_date").flatpickr();
 		$('#datepicker_start').datetimepicker({
 			showClose: true,
@@ -125,7 +124,7 @@ export default class Home extends React.Component {
 		form.append("auth_token", "uTDfRK4WPtpchbr3mHsIsftXmBlw6VWVakHvPiIGWoc=");
 		form.append("security_context", "imda-stee-vpp");
 
-		$.loader.open({imgUrl: './imgs/loader/loading32x32.gif'});
+		$.loader.open({imgUrl: '../imgs/loader/loading32x32.gif'});
 
 		$.ajax({
 			"method": "POST",
