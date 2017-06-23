@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
-import { Link, withRouter } from 'react-router';
+import { Link, withRouter, browserHistory } from 'react-router';
 
 import l20n, { Entity } from '@sketchpixy/rubix/lib/L20n';
 
@@ -40,6 +40,7 @@ import {
   TimelineTitle
 } from '@sketchpixy/rubix';
 
+import Auth from '../Auth.js';
 var applications_data = [
 {
   "description": "Search and Retrieve Stored Files",
@@ -371,6 +372,10 @@ class BodyLayout extends React.Component {
 }
 
 class MainMenu extends React.Component {
+  logout(){
+    Auth.deauthenticateUser();
+    browserHistory.push('/login');
+  }
   render() {
     const cogIcon = (
       <Image src={`/imgs/app/main_menu.svg`} width='50' height='40'/>
@@ -378,17 +383,17 @@ class MainMenu extends React.Component {
 
     return (
       <NavDropdownHover noCaret eventKey={4} title={cogIcon} id='main-menu' className='header-menu small-font'>
-        <MenuItem eventKey='help'  glyph='icon-stroke-gap-icons-Settings' href="#home">
-          <span> Help</span>
+        <MenuItem href="/settings">
+          <Icon bundle='stroke-gap-icons' glyph='Settings' /><span> Settings </span>
         </MenuItem>
         <MenuItem href="/account">
-          <span> Account </span>
+          <Icon bundle='simple-line-icons' glyph='user-follow' /><span> Account </span>
         </MenuItem>
-        <MenuItem href="/settings">
-          <span> Settings </span>
+        <MenuItem eventKey='help'  href="/home">
+          <Icon bundle='fontello' glyph='help-circle' /><span> Help</span>
         </MenuItem>
-        <MenuItem href="/logout" >
-          <span> Logout </span>
+        <MenuItem onClick={this.logout}>
+          <Icon bundle='ikons' glyph='logout' /> <span> Logout </span>
         </MenuItem>
       </NavDropdownHover>
     );

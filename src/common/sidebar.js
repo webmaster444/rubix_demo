@@ -8,7 +8,8 @@ import {
   SidebarDivider,DropdownButton
 } from '@sketchpixy/rubix';
 
-import { Link, withRouter } from 'react-router';
+import { Link, withRouter, browserHistory } from 'react-router';
+import Auth from '../Auth.js';
 
 var applications_data = [ 
 {
@@ -41,6 +42,11 @@ class ApplicationSidebar extends React.Component {
     this._nav.search(e.target.value);
   }
 
+  logout(){
+    Auth.deauthenticateUser();
+    browserHistory.push('/login');
+  }
+  
   getPath(path) {
     var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
     path = `/${dir}/${path}`;
@@ -106,7 +112,7 @@ class ApplicationSidebar extends React.Component {
                   <SidebarNavItem glyph='icon-stroke-gap-icons-Settings' name='Settings' href={::this.getPath('settings')} />
                   <SidebarNavItem glyph='icon-simple-line-icons-user-follow' href={::this.getPath('account')} name='Account'/>
                   <SidebarNavItem glyph='icon-fontello-help' href={::this.getPath('help')} name='Help' />
-                  <SidebarNavItem glyph='icon-ikons-logout' href='#' onClick={::this.handleLogout} name='Logout' />
+                  <SidebarNavItem glyph='icon-ikons-logout' href='#' onClick={::this.logout} name='Logout' />
                 </SidebarNav>
                 <br />
                 <br />
