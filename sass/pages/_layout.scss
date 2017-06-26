@@ -44,6 +44,14 @@
       padding: 0px 10px;
     }
   }
+
+  #search-menu{
+    margin-left:30px;
+  }
+
+  #search_nav{
+    margin-left: 25px;
+  }
 }
 
 #rubix-nav-header{
@@ -148,5 +156,11 @@ html.touchevents #body{
 ul.messenger.messenger-fixed.messenger-on-right, ul.messenger.messenger-fixed.messenger-on-left{
   @media(max-width: $screen-xs){
     width: 80%;
+  }
+}
+
+#search_modal{
+  .modal-body{
+    height: 300px;
   }
 }

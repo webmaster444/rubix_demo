@@ -5,10 +5,10 @@ import { Grid, Row, Col, Form, FormGroup, Button, ControlLabel, FormControl, Che
 
 import settings from '../settings.js';
 import Panelunit from '../common/PanelUnit';
-import Datatable from './Datatablesjs.js';
+import Datatable from '../routes/Datatablesjs.js';
 
 
-export default class Home extends React.Component {
+export default class SearchForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.setTableObj = this.setTableObj.bind(this);
@@ -167,60 +167,34 @@ export default class Home extends React.Component {
 	render() {
 		return (
 			<div className="home_main">
-				<Col md={8}>
-					<Panelunit title="Search Result">
-						<div className="home_center">
-							<Datatable 
-								tableData={this.state.tableData}
-								tableObj={this.state.tableObj}
-								setTableObj={this.setTableObj}
-								setDetailData={this.setDetailData}
-							/>
-						</div>
-					</Panelunit>
-				</Col>
-				<Col md={4}>
-					<Panelunit title="Details">
-						<div className="home_right">
+					<Panelunit title="Form" >
+						<div className="home_left">
+							{/*<input type='text' id='start_date' />*/}
 							<FormGroup>
-								<ControlLabel>File Name:</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.file_name}
-								</FormControl.Static>
+								<ControlLabel>Start Date</ControlLabel>
+								<div className='input-group date' id='datepicker_start'>
+									<input type='text' className="form-control" name='start_time'/>
+									<span className="input-group-addon">
+											<span className="glyphicon glyphicon-calendar" id='btn_starttime'></span>
+									</span>
+								</div>
 							</FormGroup>
 							<FormGroup>
-								<ControlLabel>Origin Name:</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.original_file_name}
-								</FormControl.Static>
+								<ControlLabel>End Date</ControlLabel>
+								<div className='input-group date' id='datepicker_end'>
+									<input type='text' className="form-control" name='stop_time'/>
+									<span className="input-group-addon">
+										<span className="glyphicon glyphicon-calendar" id='btn_stoptime'></span>
+									</span>
+								</div>
 							</FormGroup>
 							<FormGroup>
-								<ControlLabel>File Size(bytes):</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.file_size}
-								</FormControl.Static>
-							</FormGroup>
-							<FormGroup>
-								<ControlLabel>Tags:</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.tags}
-								</FormControl.Static>
-							</FormGroup>
-							<FormGroup>
-								<ControlLabel>Uploader ID:</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.uploader_id}
-								</FormControl.Static>
-							</FormGroup>
-							<FormGroup>
-								<ControlLabel>Upload timestamp:</ControlLabel>
-								<FormControl.Static>
-									{this.state.detailData.uploaded_timestamp}
-								</FormControl.Static>
+								<Button  onClick={this.search}>
+									Search
+								</Button>
 							</FormGroup>
 						</div>
 					</Panelunit>
-				</Col>
 			</div>
 		);
 	}

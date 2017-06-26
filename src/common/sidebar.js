@@ -5,11 +5,12 @@ import {
   SidebarControls, SidebarControlBtn,
   LoremIpsum, Grid, Row, Col, FormControl,
   Label, Progress, Icon,
-  SidebarDivider,DropdownButton
+  SidebarDivider,DropdownButton,Modal
 } from '@sketchpixy/rubix';
 
 import { Link, withRouter, browserHistory } from 'react-router';
 import Auth from '../Auth.js';
+import SearchForm from './SearchForm.js';
 
 var applications_data = [ 
 {
@@ -21,7 +22,7 @@ var applications_data = [
     {
       "component": "viewDownloadFiles",
       "menus": [
-        "mnuSearchFiles"
+        "mnuSearchFiles",'Test'
       ],
       "name": "viewDownload"
     }
@@ -29,8 +30,38 @@ var applications_data = [
 }
 ];
 
+class SearchModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { showModal: false };
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+  render() {
+
+    return (
+      <Modal id="search_modal" show={this.state.showModal} onHide={::this.close}>
+        <Modal.Body>
+          <SearchForm />
+        </Modal.Body>
+      </Modal>
+    );
+  }
+}
+
 @withRouter
 class ApplicationSidebar extends React.Component {
+  constructor () {
+    super();
+    this.launchSearchModal = this.launchSearchModal.bind(this);
+  }
   componentDidMount() {
     $('#sidebar a').on('click', function(){
         $("#sub_mbl_nav_btn").click(); //bootstrap 3.x by Richard
@@ -47,6 +78,10 @@ class ApplicationSidebar extends React.Component {
     browserHistory.push('/login');
   }
   
+  launchSearchModal() {
+    this.specialModal.open();
+  }
+
   getPath(path) {
     var dir = this.props.location.pathname.search('rtl') !== -1 ? 'rtl' : 'ltr';
     path = `/${dir}/${path}`;
@@ -61,10 +96,10 @@ class ApplicationSidebar extends React.Component {
     return false;
   }
 
-  handleLogout(e){
-    this.props.router.push('/');
-  }
   render() {
+    var _this = this;
+            console.log(_this);
+
     var dir = this.props.location.pathname;
     var index_str = dir.lastIndexOf('/');
     var id_str = dir.substr(index_str + 1);
@@ -78,7 +113,12 @@ class ApplicationSidebar extends React.Component {
       submenu_items=[];
       if(links_data !=undefined){
         links_data.map(function(application, i){
-          submenu_items.push(<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application} />);
+          var ts = {application};
+          if(ts.application=='mnuSearchFiles'){
+            submenu_items.push(<SidebarNavItem glyph='icon-fontello-search' eventKey={i} name='Search Files' onClick={_this.launchSearchModal} />);
+          }else{
+            submenu_items.push(<SidebarNavItem glyph='icon-fontello-gauge' eventKey={i} name={application} />);
+          }
         })
       }else{
         submenu_items = <span> </span>;
@@ -117,6 +157,7 @@ class ApplicationSidebar extends React.Component {
                 <br />
                 <br />
                 <br />
+                <SearchModal ref={(c) => this.specialModal = c} />
               </div>
             </Col>
           </Row>

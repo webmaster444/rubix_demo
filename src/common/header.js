@@ -41,6 +41,7 @@ import {
 } from '@sketchpixy/rubix';
 
 import Auth from '../Auth.js';
+import SearchForm from './SearchForm.js';
 var applications_data = [
 {
   "description": "Search and Retrieve Stored Files",
@@ -94,7 +95,13 @@ class Application_Selector extends React.Component {
       submenu_items=[];
       if(links_data !=undefined){
         links_data.map(function(application, i){
-          submenu_items.push(<SidebarNavItem eventKey={i} name={application} />);
+          var ts = {application};
+          if(ts.application=='mnuSearchFiles'){
+            submenu_items.push(<Nav> <SearchNav /> </Nav>);
+          }else{
+            submenu_items.push(<SidebarNavItem eventKey={i} name={application} />);  
+          }
+          
         })
       }else{
         submenu_items = <span> </span>;
@@ -102,7 +109,7 @@ class Application_Selector extends React.Component {
 
       applications_list = [];
       applications_data.map(function(application,i){
-        applications_list.push(<SidebarNavItem name={application.title} href={application.name}/>);
+        applications_list.push(<NavItem eventKey={i} href={application.name}> {application.title}</NavItem>);
       })
     }
 
@@ -575,7 +582,74 @@ class SpecialModal extends React.Component {
   }
 }
 
+class SearchModal extends React.Component {
+  constructor(props) {
+    super(props);
 
+    this.state = { showModal: false };
+  }
+
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+
+  render() {
+
+    return (
+      <Modal id="search_modal" show={this.state.showModal} onHide={::this.close}>
+        <Modal.Body>
+          <SearchForm />
+        </Modal.Body>
+      </Modal>
+    );
+  }
+}
+@withRouter
+class DirectNavItem extends React.Component {
+  render() {
+    var active = false;
+    var currentLocation = this.props.location.pathname;
+
+    if(!active && this.props.path) {
+      active = this.props.router.isActive(this.props.path) && (currentLocation == this.props.path);
+    }
+
+    var classes = classNames({
+      'pressed': active
+    }, this.props.className);
+
+    return (
+      <NavItem className={classes} style={this.props.style} href={this.props.path} to={this.props.path} componentClass={Link}>
+        <Icon bundle={this.props.bundle || 'fontello'} glyph={this.props.glyph} />
+      </NavItem>
+    );
+  }
+}
+
+class SearchNav extends React.Component {
+  launchSpecialModal() {
+    this.specialModal.open();
+  }
+  render() {
+    const rssfeedIcon = (
+      <span>
+        <Icon bundle='fontello' glyph='search' />
+      </span>
+    );
+
+    return (
+    <Nav id="search_nav">
+      <NavItem eventKey={3} onClick={::this.launchSpecialModal}> <Icon bundle='fontello' glyph='search' /></NavItem>
+      <SearchModal ref={(c) => this.specialModal = c} />
+    </Nav>
+
+    );
+  }
+}
 export default class Header extends React.Component {
   launchSpecialModal() {
     this.specialModal.open();
@@ -609,7 +683,6 @@ export default class Header extends React.Component {
                 </Button>
                 </Col>
                 <SpecialModal ref={(c) => this.specialModal = c} />
-        
               </Row>
             </Navbar>
           </Col>
