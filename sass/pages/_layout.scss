@@ -161,6 +161,14 @@ ul.messenger.messenger-fixed.messenger-on-right, ul.messenger.messenger-fixed.me
 
 #search_modal{
   .modal-body{
-    height: 300px;
+    height: 250px;
+    .panelunit_header{
+      display:none;
+    }
+
+    .panelunit_body{
+      border:none;
+    }
   }
+
 }

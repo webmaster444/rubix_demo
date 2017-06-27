@@ -167,7 +167,7 @@ export default class SearchForm extends React.Component {
 	render() {
 		return (
 			<div className="home_main">
-					<Panelunit title="Form" >
+					<Panelunit>
 						<div className="home_left">
 							{/*<input type='text' id='start_date' />*/}
 							<FormGroup>
@@ -189,7 +189,7 @@ export default class SearchForm extends React.Component {
 								</div>
 							</FormGroup>
 							<FormGroup>
-								<Button  onClick={this.search}>
+								<Button  className="pull-right" onClick={this.search}>
 									Search
 								</Button>
 							</FormGroup>

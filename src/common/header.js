@@ -601,6 +601,9 @@ class SearchModal extends React.Component {
 
     return (
       <Modal id="search_modal" show={this.state.showModal} onHide={::this.close}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter date range to search</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
           <SearchForm />
         </Modal.Body>
@@ -631,6 +634,10 @@ class DirectNavItem extends React.Component {
 }
 
 class SearchNav extends React.Component {
+  componentDidMount(){
+    if($(window).width()>990)
+      this.specialModal.open();
+  }
   launchSpecialModal() {
     this.specialModal.open();
   }
@@ -643,7 +650,7 @@ class SearchNav extends React.Component {
 
     return (
     <Nav id="search_nav">
-      <NavItem eventKey={3} onClick={::this.launchSpecialModal}> <Icon bundle='fontello' glyph='search' /></NavItem>
+      <NavItem eventKey={3} onClick={::this.launchSpecialModal}> <Icon bundle='fontello' glyph='search' /> Search </NavItem>
       <SearchModal ref={(c) => this.specialModal = c} />
     </Nav>
 
