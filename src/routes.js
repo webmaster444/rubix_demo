@@ -14,6 +14,7 @@ import Login from './routes/Login';
 import Signup from './routes/Signup';
 import Storage from './routes/Storage';
 import Auth from './Auth.js';
+import Status from './routes/Status';
 class App extends React.Component {
   render() {
     return (
@@ -80,6 +81,7 @@ const basicRoutes = (
   <Route>
     <Route path='login' onEnter={isLoggedIn} component={Login} />
     <Route path='signup' component={Signup} />
+    <Route path='status' component={Status} />
   </Route>
 );
 
